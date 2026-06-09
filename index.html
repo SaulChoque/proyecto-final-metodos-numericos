@@ -71,7 +71,40 @@
                 </div>
             </div>
         </section>
+<section class="card shadow-sm mb-5 border-0 border-top border-warning border-4">
+            <div class="card-body p-4">
+                <h2 class="card-title text-warning">Escenario F: Pánico en la Red de Distribución</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="p-3 bg-light rounded border-start border-warning border-4">
+                            <p class="mb-1"><strong>El Problema:</strong> Modelar cómo los rumores pueden alterar la demanda, provocar compras impulsivas y afectar la distribución normal de productos básicos.</p>
+                            <p class="mb-1"><strong>Significado Matemático:</strong> Se utilizan sistemas de ecuaciones lineales mal condicionados. Se busca demostrar cómo una pequeña perturbación en los datos (un aumento marginal en la demanda) genera un cambio drástico y caótico en la solución del sistema.</p>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row align-items-center">
+                    <div class="col-lg-5">
+                        <h5 class="mb-3">Simulador de Perturbación de Datos</h5>
+                        <div class="alert alert-secondary text-center">
+                            <label for="rumor-slider" class="form-label fw-bold">Intensidad del Rumor (Aumento artificial de demanda):</label>
+                            <input type="range" class="form-range" id="rumor-slider" min="0" max="15" step="1" value="0">
+                            <span id="valor-rumor" class="badge bg-warning text-dark fs-6 mt-2">+0% de Demanda</span>
+                        </div>
+                        <p class="text-muted small">Al mover el deslizador, simulamos un mensaje de desabastecimiento que se viraliza, provocando que la población busque abastecerse por pánico.</p>
+                        <button class="btn btn-warning w-100 fw-bold text-dark" id="btn-calcular-mod1-f">Evaluar Impacto Logístico</button>
+                    </div>
+                    
+                    <div class="col-lg-7 mt-4 mt-lg-0">
+                        <div class="chart-container" style="position: relative; height:250px; width:100%">
+                            <canvas id="graficoPanico"></canvas>
+                        </div>
+                        <div id="interpretacion-mod1-f" class="alert alert-warning mt-3 d-none"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section class="card shadow-sm mb-5 border-0">
             <div class="card-body p-4">
                 <h2 class="card-title text-success">Módulo 2: Umbral Crítico Familiar (Escenario E)</h2>
