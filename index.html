@@ -3,79 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulación Interactiva de Dinámicas Socioeconómicas</title>
+    <title>Simulador de Crisis - Métodos Numéricos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Simulador de Crisis: Abastecimiento y Conflicto Social</h1>
-        <p class="lead text-center">Análisis mediante métodos numéricos para la toma de decisiones estratégicas.</p>
+        <header class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-primary">Simulador de Crisis: Bloqueos y Abastecimiento</h1>
+            <p class="lead">Análisis matemático de la logística y el impacto económico familiar durante los bloqueos nacionales.</p>
+            <div class="alert alert-warning text-start shadow-sm mt-4">
+                <strong>Contexto Actual (2026):</strong> El país atraviesa un panorama crítico con más de 150 puntos de bloqueo que cortan la cadena logística de alimentos y carburantes hacia plantas como Senkata. Este simulador busca aportar soluciones objetivas mediante métodos numéricos.
+            </div>
+        </header>
 
-        <section id="modulo1" class="my-5 p-4 border rounded shadow-sm bg-light">
-            <h2>Módulo 1: Sistemas de Ecuaciones Lineales</h2>
-            <p><strong>Escenario A:</strong> Optimización del abastecimiento y red de transporte usando Gauss-Seidel.</p>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Ingreso de Datos (Matriz 3x3)</h4>
-                    <form id="form-mod1">
-                        <div class="mb-3">
-                            <label>Coeficientes (separados por coma, ej: 10,-1,2,0)</label>
-                            <input type="text" id="matriz-a" class="form-control" value="10,-1,2,0,-1,11,-1,3,2,-1,10,-1,0,3,-1,8" placeholder="Ingrese matriz">
+        <section class="card shadow-sm mb-5 border-0">
+            <div class="card-body p-4">
+                <h2 class="card-title text-primary">Módulo 1: Red de Transporte en Crisis (Escenario A)</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="p-3 bg-light rounded border-start border-primary border-4">
+                            <p class="mb-1"><strong>El Problema:</strong> Optimizar el envío de suministros desde plantas de acopio hacia mercados urbanos con vías cortadas.</p>
+                            <p class="mb-1"><strong>Significado Matemático:</strong> Se modela la red como un sistema $Ax=b$. La matriz representa la capacidad de las vías; si hay un bloqueo total, el coeficiente de la ruta se reduce a cero. El vector independiente representa la demanda mínima.</p>
                         </div>
-                        <div class="mb-3">
-                            <label>Términos independientes (separados por coma)</label>
-                            <input type="text" id="vector-b" class="form-control" value="6,25,-11,15" placeholder="Ingrese vector b">
-                        </div>
-                        <button type="button" class="btn btn-primary" id="btn-calcular-mod1">Ejecutar Cálculo</button>
-                    </form>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h4>Resultados en Pantalla</h4>
-                    <div id="resultado-mod1" class="alert alert-info">Esperando datos...</div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h5 class="mb-3">Matriz de Capacidad Vial y Demanda</h5>
+                        <div class="matrix-grid mb-4" id="matriz-inputs">
+                            <input type="number" class="form-control" id="a00" value="10">
+                            <input type="number" class="form-control text-danger fw-bold" id="a01" value="0" title="Vía Bloqueada">
+                            <input type="number" class="form-control" id="a02" value="2">
+                            <input type="number" class="form-control border-primary" id="b0" value="6">
+                            <input type="number" class="form-control" id="a10" value="-1">
+                            <input type="number" class="form-control" id="a11" value="11">
+                            <input type="number" class="form-control" id="a12" value="-1">
+                            <input type="number" class="form-control border-primary" id="b1" value="25">
+                            <input type="number" class="form-control" id="a20" value="2">
+                            <input type="number" class="form-control" id="a21" value="-1">
+                            <input type="number" class="form-control" id="a22" value="10">
+                            <input type="number" class="form-control border-primary" id="b2" value="-11">
+                        </div>
+                        <button class="btn btn-primary w-100 fw-bold" id="btn-calcular-mod1">Calcular Logística (Gauss-Seidel)</button>
+                    </div>
+                    
+                    <div class="col-lg-6 mt-4 mt-lg-0">
+                        <h5 class="mb-3">Despliegue de Unidades</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-bordered text-center align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Destino</th>
+                                        <th>Cisternas/Camiones Asignados</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-resultados-mod1">
+                                    <tr><td colspan="2" class="text-muted">Ingrese datos y calcule...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="interpretacion-mod1" class="alert alert-info mt-3 d-none"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="modulo2" class="my-5 p-4 border rounded shadow-sm bg-light">
-            <h2>Módulo 2: Raíces de Ecuaciones</h2>
-            <p><strong>Escenario E:</strong> Umbrales críticos de abastecimiento utilizando el Método de Bisección.</p>
-            
-            <div class="row">
-                <div class="col-md-6">
-                    <form id="form-mod2">
-                        <div class="mb-3">
-                            <label>Intervalo Inicial [a]</label>
+        <section class="card shadow-sm mb-5 border-0">
+            <div class="card-body p-4">
+                <h2 class="card-title text-success">Módulo 2: Umbral Crítico Familiar (Escenario E)</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="p-3 bg-light rounded border-start border-success border-4">
+                            <p class="mb-1"><strong>El Problema:</strong> Identificar el "Día Cero", es decir, el momento exacto en que el costo de vida ahoga a una familia debido a la inflación generada por el desabastecimiento.</p>
+                            <p class="mb-1"><strong>Significado Matemático:</strong> Encontramos la raíz de la función donde el costo acumulado iguala los ingresos, representado como $f(t)=0$.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
                             <input type="number" id="intervalo-a" class="form-control" value="0">
+                            <label>Día Inicial de Bloqueos [a]</label>
                         </div>
-                        <div class="mb-3">
-                            <label>Intervalo Final [b]</label>
-                            <input type="number" id="intervalo-b" class="form-control" value="5">
+                        <div class="form-floating mb-3">
+                            <input type="number" id="intervalo-b" class="form-control" value="20">
+                            <label>Día Final Proyectado [b]</label>
                         </div>
-                        <div class="mb-3">
-                            <label>Tolerancia</label>
-                            <input type="number" step="0.0001" id="tolerancia" class="form-control" value="0.001">
+                        <button class="btn btn-success w-100 fw-bold" id="btn-calcular-mod2">Proyectar Día Cero (Bisección)</button>
+                        <div id="resultado-texto-mod2" class="mt-3 fs-5"></div>
+                    </div>
+                    
+                    <div class="col-md-8 mt-4 mt-md-0">
+                        <div class="chart-container" style="position: relative; height:300px; width:100%">
+                            <canvas id="graficoUmbral"></canvas>
                         </div>
-                        <button type="button" class="btn btn-success" id="btn-calcular-mod2">Ejecutar Cálculo</button>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <h4>Resultados (Umbral Crítico)</h4>
-                    <div id="resultado-mod2" class="alert alert-success">Esperando datos...</div>
+                        <div id="interpretacion-mod2" class="alert alert-success mt-3 d-none"></div>
+                    </div>
                 </div>
             </div>
-        </section>
-
-        <section id="conclusiones" class="my-5 p-4 border rounded shadow-sm bg-dark text-white">
-            <h2>Conclusiones</h2>
-            <p><strong>Limitaciones del modelo y aprendizajes:</strong></p>
-            <p>Aquí se redactarán las conclusiones finales del proyecto, detallando el método más útil y las mejoras futuras.</p>
         </section>
     </div>
 
-    <script src="js/modulo1.js"></script>
-    <script src="js/modulo2.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
